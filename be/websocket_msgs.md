@@ -9,7 +9,6 @@ server sends err if the room doesnt exist
 otherwise adds that player and their id to the room
 
 ### set room's problem settings
-[comment]: # TODO: find lc available problem settings
 
 host should be able to change the settings for 
  - problem difficulty
@@ -32,7 +31,6 @@ once both players are ready in a match
  - store on server
 
 ### validate problem is submitted
-[comment]: # find lc api for testing submit
 
 if a player presses "solved" we
  - check if they solved it
