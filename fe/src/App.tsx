@@ -6,8 +6,38 @@ const socket = io("http://localhost:5000", {
   autoConnect: false,
 });
 
+function Chat({messages, updateMessages}) {
+  const [currentMessage, setCurrentMessage] = useState("");
+
+  const sendCurrentMessage = () => {
+    if (currentMessage.length > 0) {
+      updateMessages(currentMessage);
+      setCurrentMessage("");
+    }
+    else {
+      console.log("cant send empty");
+    }
+  };
+
+  return (
+    <>
+      <div> CHAT </div>
+      <ul className="chat-history">
+	{messages.map((m, idx) => <li key={idx}> {m} </li>)}
+      </ul>
+      <input 
+	value={currentMessage}
+	onChange={(e) => setCurrentMessage(e.target.value)}
+	placeholder="enter a msg vro.."
+      ></input>
+      <button onClick={sendCurrentMessage}>send</button>
+    </>
+  ) 
+}
+
 function App() {
   const [token, setToken] = useState("");
+  const [msgs, setMsgs] = useState([]);
 
   function send_msg() {
     console.log("sending hi");
@@ -17,6 +47,12 @@ function App() {
   const changeToken = (event: any) => {
     setToken(event.target.value);
   };
+
+  const sendMsg = (msg_txt) => {
+    setMsgs([...msgs, msg_txt]);
+    socket.emit("update_chat", msg_txt);
+    console.log('sent ' + msg_txt);
+  }
 
   useEffect(() => {
     socket.connect();
@@ -46,6 +82,7 @@ function App() {
       <div>db says hi</div>
       <button onClick={send_msg}> click me</button>
       <input onChange={setToken}></input>
+      <Chat messages={msgs} updateMessages={sendMsg} />
     </>
   );
 }

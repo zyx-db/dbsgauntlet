@@ -57,7 +57,7 @@ class graphqlClient:
         while True:
             possible = self._get_random_problem(difficulty, tags)
 
-            # we need a problem neither contest has solved
+            # we need a problem neither contestant has solved
             status_a = self.get_problem_status(possible, cookie_a)
             # status_b = self.get_problem_status(possible, cookie_b)
 
